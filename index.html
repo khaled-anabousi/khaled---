@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phoenix Rizze - Feasibility Studies</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Styles */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --light-gray: #f5f5f5;
+            --white: #ffffff;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--white);
+            border-bottom: 1px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+            z-index: 100; 
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo img {
+            height: 50px;
+            border-top: 2px solid var(--secondary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding: 3px 0;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 15px;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            font-size: 0.9em;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+        
+        .cta {
+            background-color: var(--secondary-color);
+            color: white !important;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        #languageSwitcher {
+            padding: 4px 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9em;
+            background-color: white;
+            cursor: pointer;
+            min-width: 120px;
+        }
+        
+        .hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/Hero Image.jpeg');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 0 20px;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .under-construction {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .content-section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 5%;
+        }
+        
+        .content-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        /* New style for justified paragraphs */
+        .justify-text {
+            text-align: justify;
+            margin-bottom: 15px;
+        }
+        
+        /* New Box Style for the Added Content */
+        .feature-box {
+            background-color: var(--light-gray);
+            border-left: 4px solid var(--secondary-color);
+            padding: 30px;
+            margin: 40px 0;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .feature-box h2 {
+            color: var(--secondary-color);
+            margin-top: 0;
+            text-align: left;
+        }
+        
+        .feature-box p {
+            text-align: justify;
+            margin-bottom: 15px;
+        }
+        
+        .image-text-section {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            margin: 60px 0;
+        }
+        
+        .image-text-section img {
+            width: 50%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .image-text-section .text-content {
+            width: 50%;
+        }
+        
+        .image-text-section .text-content p {
+            text-align: justify;
+            margin-bottom: 15px;
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 40px 5%;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: var(--white);
+            text-decoration: none;
+        }
+        
+        .footer-column a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            color: var(--white);
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .comment-form {
+            margin-top: 20px;
+        }
+        
+        .comment-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        
+        .comment-form button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Warning message styles */
+        .warning-message {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            margin: 20px 5%;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .warning-message.hidden {
+            display: none;
+        }
+
+        /* Hide Google Translate elements */
+        .goog-te-banner-frame,
+        .goog-te-gadget,
+        .goog-te-gadget-simple,
+        .goog-te-combo,
+        .goog-te-menu-frame,
+        .goog-logo-link,
+        .goog-te-ftab,
+        .goog-te-balloon-frame,
+        .goog-te-ftab-frame,
+        #goog-gt-tt,
+        .goog-te-spinner-pos,
+        .goog-te-ftab-float {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            height: 0 !important;
+            width: 0 !important;
+            position: absolute !important;
+            top: -9999px !important;
+        }
+
+        body {
+            top: 0 !important;
+            position: static !important;
+        }
+
+        .goog-te-menu-value {
+            display: none !important;
+        }
+
+        #google_translate_element {
+            display: none !important;
+        }
+
+        /* Force hide any iframe from Google Translate */
+        iframe[src*="translate.google.com"] {
+            display: none !important;
+        }
+
+        /* Override any Google Translate styling */
+        .translated-ltr {
+            direction: ltr !important;
+        }
+
+        .translated-rtl {
+            direction: rtl !important;
+        }
+        
+        @media (max-width: 768px) {
+            .image-text-section {
+                flex-direction: column;
+            }
+            
+            .image-text-section img,
+            .image-text-section .text-content {
+                width: 100%;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Google Translate Element (Hidden) -->
+    <div id="google_translate_element"></div>
+
+    </div>
+
+    <header>
+        <nav class="navbar">
+            <div class="logo"><img src="images/LOGO PH.png" alt="Phoenix Rizze Logo"></div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="why.html">Why MySim?</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li>
+                    <select id="languageSwitcher">
+                        <option value="en">English</option>
+                        <option value="ar">العربية</option>
+                        <option value="es">Español</option>
+                        <option value="fr">Français</option>
+                        <option value="de">Deutsch</option>
+                        <option value="it">Italiano</option>
+                        <option value="pt">Português</option>
+                        <option value="ru">Русский</option>
+                        <option value="zh">中文</option>
+                        <option value="ja">日本語</option>
+                        <option value="ko">한국어</option>
+                        <option value="hi">हिंदी</option>
+                        <option value="tr">Türkçe</option>
+                        <option value="nl">Nederlands</option>
+                        <option value="sv">Svenska</option>
+                        <option value="da">Dansk</option>
+                        <option value="no">Norsk</option>
+                        <option value="fi">Suomi</option>
+                        <option value="pl">Polski</option>
+                        <option value="cs">Čeština</option>
+                        <option value="hu">Magyar</option>
+                        <option value="ro">Română</option>
+                        <option value="bg">Български</option>
+                        <option value="hr">Hrvatski</option>
+                        <option value="sk">Slovenčina</option>
+                        <option value="sl">Slovenščina</option>
+                        <option value="et">Eesti</option>
+                        <option value="lv">Latviešu</option>
+                        <option value="lt">Lietuvių</option>
+                        <option value="el">Ελληνικά</option>
+                        <option value="he">עברית</option>
+                        <option value="fa">فارسی</option>
+                        <option value="ur">اردو</option>
+                        <option value="bn">বাংলা</option>
+                        <option value="ta">தமிழ்</option>
+                        <option value="te">తెలుగు</option>
+                        <option value="ml">മലയാളം</option>
+                        <option value="kn">ಕನ್ನಡ</option>
+                        <option value="gu">ગુજરાતી</option>
+                        <option value="pa">ਪੰਜਾਬੀ</option>
+                        <option value="mr">मराठी</option>
+                        <option value="ne">नेपाली</option>
+                        <option value="si">සිංහල</option>
+                        <option value="my">မြန်မာ</option>
+                        <option value="th">ไทย</option>
+                        <option value="vi">Tiếng Việt</option>
+                        <option value="id">Bahasa Indonesia</option>
+                        <option value="ms">Bahasa Melayu</option>
+                        <option value="tl">Filipino</option>
+                        <option value="sw">Kiswahili</option>
+                        <option value="am">አማርኛ</option>
+                        <option value="ha">Hausa</option>
+                        <option value="yo">Yorùbá</option>
+                        <option value="ig">Igbo</option>
+                        <option value="zu">isiZulu</option>
+                        <option value="af">Afrikaans</option>
+                        <option value="sq">Shqip</option>
+                        <option value="eu">Euskera</option>
+                        <option value="be">Беларуская</option>
+                        <option value="bs">Bosanski</option>
+                        <option value="ca">Català</option>
+                        <option value="co">Corsu</option>
+                        <option value="cy">Cymraeg</option>
+                        <option value="eo">Esperanto</option>
+                        <option value="fo">Føroyskt</option>
+                        <option value="fy">Frysk</option>
+                        <option value="ga">Gaeilge</option>
+                        <option value="gd">Gàidhlig</option>
+                        <option value="gl">Galego</option>
+                        <option value="ka">ქართული</option>
+                        <option value="hy">Հայերեն</option>
+                        <option value="is">Íslenska</option>
+                        <option value="jw">Basa Jawa</option>
+                        <option value="kk">Қазақ тілі</option>
+                        <option value="km">ខ្មែរ</option>
+                        <option value="ku">Kurdî</option>
+                        <option value="ky">Кыргызча</option>
+                        <option value="lo">ລາວ</option>
+                        <option value="la">Latina</option>
+                        <option value="lb">Lëtzebuergesch</option>
+                        <option value="mk">Македонски</option>
+                        <option value="mg">Malagasy</option>
+                        <option value="mt">Malti</option>
+                        <option value="mi">Te Reo Māori</option>
+                        <option value="mn">Монгол</option>
+                        <option value="ps">پښتو</option>
+                        <option value="sm">Gagana Samoa</option>
+                        <option value="sr">Српски</option>
+                        <option value="st">Sesotho</option>
+                        <option value="sn">Shona</option>
+                        <option value="sd">سنڌي</option>
+                        <option value="so">Soomaali</option>
+                        <option value="su">Basa Sunda</option>
+                        <option value="tg">Тоҷикӣ</option>
+                        <option value="tt">Татарча</option>
+                        <option value="tk">Türkmençe</option>
+                        <option value="uk">Українська</option>
+                        <option value="uz">O'zbekcha</option>
+                        <option value="cy">Cymraeg</option>
+                        <option value="xh">isiXhosa</option>
+                        <option value="yi">ייִדיש</option>
+                    </select>
+                </li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="start.html" style="background: #2196F3; color: white; padding: 8px 15px; border-radius: 4px; font-weight: bold;">START NOW</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="hero">
+            <h1>Welcome to PhoenixRizze</h1>
+            <div class="under-construction">Website Under Construction</div>
+        </section>
+        
+        <section class="content-section">
+            <h2>What are Feasibility Studies?</h2>
+
+            <p class="justify-text">Feasibility study is a comprehensive analysis conducted before implementing any investment project to ensure its economic and commercial viability, determine chances of success or failure, estimate expected costs and returns, and assess risks and opportunities. It is an essential step for any successful project, regardless of its type or size.</p>
+            
+            <p class="justify-text">A feasibility study typically consists of several key elements starting with a description of the project idea and its objectives, clarifying the products or services the project will offer and what distinguishes them from competitors. It also includes market research and competitive analysis, studying demand and supply in the target market, analyzing customer behavior, and examining competitors' strengths and weaknesses, in addition to identifying expected opportunities and threats.</p>
+            
+            <p class="justify-text">The study also addresses technical aspects of the project such as selecting the appropriate location, determining the project's needs for equipment, human resources, and required technologies, while estimating technical and operational costs. Among the important aspects is the financial study which includes estimating investment and operational costs, expected revenues, break-even analysis, capital recovery period, and return on investment. Finally, results and recommendations are summarized in a final report that helps decision-makers choose the best ways to implement the project or avoid potential risks.</p>
+            
+            <p class="justify-text">Preparing a professional feasibility study is the first and fundamental step to ensure the success and sustainability of any investment project.</p>
+        </section>
+         
+        <section class="content-section">
+            <div class="feature-box">
+                <h2>PhoenixRizze: Intelligent Feasibility Studies for the Digital Era</h2>
+                <p>The PhoenixRizze platform is the intelligent and comprehensive solution that redefines the concept of project feasibility studies in the digital age. By leveraging advanced artificial intelligence technologies, PhoenixRizze provides a seamless and efficient experience for entrepreneurs, investors, managers, and decision-makers seeking a reliable and rapid method to analyse their investment ideas and transform them into successful ventures.</p>
+                
+                <p>PhoenixRizze distinguishes itself with its ability to process and analyse all aspects of a project with high precision, covering seventeen essential dimensions, including market research, financial analysis, risk assessment, technical and operational aspects, as well as legal and regulatory analysis. All a user needs to do is input basic project information, after which the platform takes over the task of preparing a comprehensive and professional feasibility report that highlights strengths and challenges, while providing practical recommendations supported by data and analytics.</p>
+                
+                <p>The platform supports multiple languages to meet the needs of users from around the world and offers the ability to obtain high-quality final reports in PDF format, making them easy to share or print. PhoenixRizze also provides intelligent guidance throughout all stages of study preparation to ensure information accuracy and clarity of results, helping users make investment decisions with confidence and reassurance.</p>
+                
+                <p>PhoenixRizze aims to empower individuals and companies to transform their ideas into successful real-world projects by providing a smart tool that combines speed, accuracy, and professionalism. Thanks to these advantages, feasibility studies are no longer exclusive to experts or consulting firms but have become accessible to everyone, regardless of project size or field.</p>
+                
+                <p>If you are looking for a reliable platform to help you evaluate your investment ideas quickly and efficiently, PhoenixRizze is your optimal choice for achieving success in the modern business world.</p>
+            </div>
+        </section>
+        
+        <section class="content-section">
+            <div class="image-text-section">
+                <img src="images/Thumbnail 2.jpeg" alt="Our Vision">
+                <div class="text-content">
+                    <h3>Our Vision</h3>
+                    <p>We believe that building a better future for our nation begins with joining our efforts and using our modern and advanced tools in developing projects that meet the needs of our time. Together, we work to transform ideas into tangible reality, benefiting from the latest technologies and expertise to lay solid foundations that positively reflect on the country's economy and the well-being of its society.</p>
+                    <p>Our partnership in building projects is not just collaboration, but a shared vision towards a prosperous and sustainable future, where we confidently stride towards progress and prosperity.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Why MySim?</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Resources</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li>Email: <a href="mailto:phx@phoenixrizze.com">phx@phoenixrizze.com</a></li>
+                    <li>Phone: 000 000 0000</li>
+                    <li>Address: Jordan, Aqaba, Aqaba 77110</li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Leave a Comment</h3>
+                <div class="comment-form">
+                    <textarea placeholder="Your message..."></textarea>
+                    <button type="submit">Send</button>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 PhoenixRizze. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <script type="text/javascript">
+        let googleTranslateReady = false;
+        let isLocalHost = false;
+        
+        // Check if running on localhost or file protocol
+        function checkEnvironment() {
+            const protocol = window.location.protocol;
+            const hostname = window.location.hostname;
+            
+            isLocalHost = protocol === 'file:' || 
+                         hostname === 'localhost' || 
+                         hostname === '127.0.0.1' ||
+                         hostname === '';
+            
+            if (isLocalHost) {
+                console.warn('Google Translate requires HTTP/HTTPS protocol to work properly');
+                document.getElementById('warningMessage').style.display = 'block';
+            } else {
+                document.getElementById('warningMessage').style.display = 'none';
+            }
+            
+            return !isLocalHost;
+        }
+        
+        function googleTranslateElementInit() {
+            if (!checkEnvironment()) {
+                console.warn('Skipping Google Translate initialization - not on web server');
+                return;
+            }
+            
+            try {
+                new google.translate.TranslateElement({
+                    pageLanguage: 'en',
+                    autoDisplay: false,
+                    includedLanguages: 'en,ar,es,fr,de,it,pt,ru,zh,ja,ko,hi,tr,nl,sv,da,no,fi,pl,cs,hu,ro,bg,hr,sk,sl,et,lv,lt,el,he,fa,ur,bn,ta,te,ml,kn,gu,pa,mr,ne,si,my,th,vi,id,ms,tl,sw,am,ha,yo,ig,zu,af,sq,eu,be,bs,ca,co,cy,eo,fo,fy,ga,gd,gl,ka,hy,is,jw,kk,km,ku,ky,lo,la,lb,mk,mg,mt,mi,mn,ps,sm,sr,st,sn,sd,so,su,tg,tt,tk,uk,uz,xh,yi'
+                }, 'google_translate_element');
+                
+                // Wait for Google Translate to be ready
+                setTimeout(() => {
+                    googleTranslateReady = true;
+                    console.log('Google Translate is ready');
+                }, 3000);
+            } catch (error) {
+                console.error('Error initializing Google Translate:', error);
+            }
+        }
+
+        function triggerGoogleTranslate(languageCode) {
+            if (isLocalHost) {
+                alert('تنبيه: المترجم لا يعمل على الملفات المحلية. يرجى استضافة الموقع على خادم ويب أو استخدام Live Server في VS Code.');
+                return false;
+            }
+            
+            console.log('Attempting to translate to:', languageCode);
+            
+            // Method 1: Direct combo selection
+            setTimeout(() => {
+                const select = document.querySelector('.goog-te-combo');
+                if (select) {
+                    console.log('Found Google Translate combo box');
+                    select.value = languageCode;
+                    select.dispatchEvent(new Event('change', { bubbles: true }));
+                    return true;
+                }
+                
+                // Method 2: Manual trigger via URL hash
+                console.log('Using hash method for translation');
+                if (languageCode !== 'en') {
+                    window.location.hash = '#googtrans(en|' + languageCode + ')';
+                } else {
+                    window.location.hash = '';
+                }
+                window.location.reload();
+            }, 1000);
+            
+            return true;
+        }
+
+        // Language switcher functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            checkEnvironment();
+            
+            const languageSwitcher = document.getElementById('languageSwitcher');
+            
+            languageSwitcher.addEventListener('change', function() {
+                const selectedLanguage = this.value;
+                console.log('Language selected:', selectedLanguage);
+                
+                if (isLocalHost) {
+                    alert('تنبيه: لكي يعمل المترجم، يجب استضافة الموقع على خادم ويب.\n\nيمكنك استخدام:\n- Live Server في VS Code\n- XAMPP أو WAMP\n- أو رفع الموقع على استضافة ويب');
+                    this.value = 'en'; // Reset to English
+                    return;
+                }
+                
+                if (!googleTranslateReady) {
+                    console.log('Google Translate not ready, waiting...');
+                    setTimeout(() => {
+                        triggerGoogleTranslate(selectedLanguage);
+                    }, 3000);
+                } else {
+                    triggerGoogleTranslate(selectedLanguage);
+                }
+            });
+            
+            // Check if page was loaded with a translation hash
+            if (window.location.hash.includes('googtrans')) {
+                const hashParts = window.location.hash.match(/googtrans\(en\|(.+)\)/);
+                if (hashParts && hashParts[1]) {
+                    languageSwitcher.value = hashParts[1];
+                }
+            }
+        });
+        
+        // Highlight active navigation link based on current page
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            navLinks.forEach(link => {
+                const linkPage = link.getAttribute('href');
+                if (currentPage === linkPage) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Hide Google Translate elements after initialization
+            if (!isLocalHost) {
+                setTimeout(() => {
+                    hideGoogleTranslateElements();
+                }, 3000);
+            }
+        });
+
+        function hideGoogleTranslateElements() {
+            // Hide all Google Translate UI elements
+            const elementsToHide = [
+                '.goog-te-banner-frame',
+                '.goog-te-ftab',
+                '.goog-logo-link',
+                '.goog-te-gadget',
+                '.goog-te-gadget-simple',
+                '.goog-te-menu-frame',
+                '.goog-te-
