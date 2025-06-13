@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phoenix Rizze - Create Account</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- reCAPTCHA API -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --light-gray: #f5f5f5;
+            --white: #ffffff;
+            --danger-color: #e74c3c;
+            --success-color: #2ecc71;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+        }
+        
+        .registration-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 5%;
+        }
+        
+        .registration-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo img {
+            height: 50px;
+            border-top: 2px solid var(--secondary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding: 3px 0;
+        }
+        
+        .registration-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .registration-header h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+        
+        .registration-header p {
+            color: #666;
+            font-size: 1rem;
+        }
+        
+        .registration-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+        }
+        
+        .password-input-container {
+            position: relative;
+        }
+        
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #777;
+        }
+        
+        .password-strength {
+            height: 4px;
+            background-color: #eee;
+            margin-top: 5px;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .password-strength-bar {
+            height: 100%;
+            width: 0;
+            transition: width 0.3s, background-color 0.3s;
+        }
+        
+        .strength-weak {
+            background-color: var(--danger-color);
+            width: 25%;
+        }
+        
+        .strength-medium {
+            background-color: #f39c12;
+            width: 50%;
+        }
+        
+        .strength-good {
+            background-color: #27ae60;
+            width: 75%;
+        }
+        
+        .strength-strong {
+            background-color: var(--success-color);
+            width: 100%;
+        }
+        
+        .error-message {
+            color: var(--danger-color);
+            font-size: 0.85em;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .terms-container {
+            grid-column: span 2;
+            margin: 20px 0;
+        }
+        
+        .terms-checkbox {
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .terms-checkbox input {
+            margin-right: 10px;
+            margin-top: 3px;
+        }
+        
+        .terms-text {
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        .terms-text a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+        
+        .terms-text a:hover {
+            text-decoration: underline;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        
+        .verification-section {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background-color: #f5f9ff;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        
+        .verification-code {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .verification-code input {
+            width: 40px;
+            height: 50px;
+            text-align: center;
+            font-size: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .resend-code {
+            margin-top: 15px;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .resend-code a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+        
+        .resend-code a:hover {
+            text-decoration: underline;
+        }
+        
+        .dob-fields {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .dob-fields select {
+            flex: 1;
+        }
+        
+        .g-recaptcha {
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+        }
+        
+        @media (max-width: 768px) {
+            .registration-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            
+            .terms-container {
+                grid-column: span 1;
+            }
+            
+            .dob-fields {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="registration-container">
+            <div class="registration-card">
+                <div class="logo">
+                    <img src="images/LOGO PH.png" alt="Phoenix Rizze Logo">
+                </div>
+                
+                <div class="registration-header">
+                    <h1>Create Your Account</h1>
+                    <p>Join PhoenixRizze to access comprehensive feasibility study simulation tools</p>
+                </div>
+                
+                <form id="registrationForm" class="registration-form" action="your-server-side-script.php" method="POST">
+                    <!-- Full Name -->
+                    <div class="form-group full-width">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" class="form-control" required>
+                        <div class="error-message" id="name-error">Please enter your full name</div>
+                    </div>
+                    
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" class="form-control" required>
+                        <div class="error-message" id="email-error">Please enter a valid email address</div>
+                    </div>
+                    
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="password-input-container">
+                            <input type="password" id="password" name="password" class="form-control" required>
+                            <i class="toggle-password fas fa-eye" data-target="password"></i>
+                        </div>
+                        <div class="password-strength">
+                            <div class="password-strength-bar" id="password-strength-bar"></div>
+                        </div>
+                        <div class="error-message" id="password-error">Password must be at least 8 characters</div>
+                    </div>
+                    
+                    <!-- Confirm Password -->
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <div class="password-input-container">
+                            <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required>
+                            <i class="toggle-password fas fa-eye" data-target="confirmPassword"></i>
+                        </div>
+                        <div class="error-message" id="confirm-error">Passwords do not match</div>
+                    </div>
+                    
+                    <!-- Country -->
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <select id="country" name="country" class="form-control" required>
+                            <option value="">Select Country</option>
+                            <!-- Countries will be populated via JavaScript -->
+                        </select>
+                        <div class="error-message" id="country-error">Please select your country</div>
+                    </div>
+                    
+                    <!-- City -->
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" name="city" class="form-control" required>
+                        <div class="error-message" id="city-error">Please enter your city</div>
+                    </div>
+                    
+                    <!-- User Type -->
+                    <div class="form-group">
+                        <label for="userType">User Type</label>
+                        <select id="userType" name="userType" class="form-control" required>
+                            <option value="">Select User Type</option>
+                            <option value="entrepreneur">Entrepreneur</option>
+                            <option value="investor">Investor</option>
+                            <option value="student">Student</option>
+                            <option value="researcher">Researcher</option>
+                            <option value="business_owner">Business Owner</option>
+                            <option value="consultant">Consultant</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <div class="error-message" id="userType-error">Please select user type</div>
+                    </div>
+                    
+                    <!-- Occupation -->
+                    <div class="form-group">
+                        <label for="occupation">Occupation</label>
+                        <input type="text" id="occupation" name="occupation" class="form-control" required>
+                        <div class="error-message" id="occupation-error">Please enter your occupation</div>
+                    </div>
+                    
+                    <!-- Date of Birth -->
+                    <div class="form-group">
+                        <label for="dob">Date of Birth</label>
+                        <div class="dob-fields">
+                            <select id="dob-day" name="dob-day" class="form-control" required>
+                                <option value="">Day</option>
+                                <!-- Days will be populated via JavaScript -->
+                            </select>
+                            <select id="dob-month" name="dob-month" class="form-control" required>
+                                <option value="">Month</option>
+                                <option value="1">January</option>
+                                <option value="2">February</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">May</option>
+                                <option value="6">June</option>
+                                <option value="7">July</option>
+                                <option value="8">August</option>
+                                <option value="9">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                            <select id="dob-year" name="dob-year" class="form-control" required>
+                                <option value="">Year</option>
+                                <!-- Years will be populated via JavaScript -->
+                            </select>
+                        </div>
+                        <div class="error-message" id="dob-error">Please select your date of birth</div>
+                    </div>
+                    
+                    <!-- Phone (Optional) -->
+                    <div class="form-group">
+                        <label for="phone">Phone Number (Optional)</label>
+                        <input type="tel" id="phone" name="phone" class="form-control">
+                        <div class="error-message" id="phone-error">Please enter a valid phone number</div>
+                    </div>
+                    
+                    <!-- Experience (Optional) -->
+                    <div class="form-group">
+                        <label for="experience">Do you have previous experience? (Optional)</label>
+                        <select id="experience" name="experience" class="form-control">
+                            <option value="">Select an option</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                            <option value="some">Some experience</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Education (Optional) -->
+                    <div class="form-group">
+                        <label for="education">Education Level (Optional)</label>
+                        <select id="education" name="education" class="form-control">
+                            <option value="">Select education level</option>
+                            <option value="high_school">High School</option>
+                            <option value="diploma">Diploma</option>
+                            <option value="bachelor">Bachelor's Degree</option>
+                            <option value="master">Master's Degree</option>
+                            <option value="phd">PhD</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <!-- reCAPTCHA -->
+                    <div class="form-group full-width">
+                        <div class="g-recaptcha" data-sitekey="6LceyFUrAAAAACcrPPv6THx7M7E2o3rmpfW6tK_x"></div>
+                        <div class="error-message" id="recaptcha-error">Please verify you're not a robot</div>
+                    </div>
+                    
+                    <!-- Terms and Conditions -->
+                    <div class="terms-container">
+                        <div class="terms-checkbox">
+                            <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                            <label for="agreeTerms" class="terms-text">
+                                I agree to the <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a>
+                            </label>
+                        </div>
+                        <div class="error-message" id="terms-error">You must agree to the terms and conditions</div>
+                    </div>
+                    
+                    <!-- Register Button -->
+                    <div class="form-group full-width">
+                        <button type="submit" class="btn btn-block">Create Account</button>
+                    </div>
+                </form>
+                
+                <!-- Verification Section -->
+                <div id="verificationSection" class="verification-section">
+                    <h3>Email Verification</h3>
+                    <p>We've sent a 6-digit verification code to your email address. Please enter it below:</p>
+                    
+                    <div class="verification-code">
+                        <input type="text" maxlength="1" pattern="[0-9]">
+                        <input type="text" maxlength="1" pattern="[0-9]">
+                        <input type="text" maxlength="1" pattern="[0-9]">
+                        <input type="text" maxlength="1" pattern="[0-9]">
+                        <input type="text" maxlength="1" pattern="[0-9]">
+                        <input type="text" maxlength="1" pattern="[0-9]">
+                    </div>
+                    
+                    <button type="button" id="verifyBtn" class="btn">Verify</button>
+                    
+                    <div class="resend-code">
+                        Didn't receive the code? <a href="#" id="resendCode">Resend Code</a>
+                        <span id="countdown">(10:00)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        // Countries list
+        const countries = [
+            "United States", "Canada", "United Kingdom", "Australia", "Germany", "France", "Japan", 
+            "China", "India", "Brazil", "South Africa", "United Arab Emirates", "Saudi Arabia", 
+            "Jordan", "Egypt", "Lebanon", "Qatar", "Kuwait", "Oman", "Bahrain", "Iraq", 
+            "Tunisia", "Algeria", "Morocco", "Turkey", "Pakistan", "Malaysia", "Singapore"
+        ];
+
+        // Populate form fields on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Populate countries dropdown
+            const countrySelect = document.getElementById('country');
+            countries.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country;
+                option.textContent = country;
+                countrySelect.appendChild(option);
+            });
+
+            // Populate days dropdown (1-31)
+            const daySelect = document.getElementById('dob-day');
+            for (let i = 1; i <= 31; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                daySelect.appendChild(option);
+            }
+
+            // Populate years dropdown (current year - 100 to current year - 18)
+            const yearSelect = document.getElementById('dob-year');
+            const currentYear = new Date().getFullYear();
+            for (let i = currentYear - 18; i >= currentYear - 100; i--) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                yearSelect.appendChild(option);
+            }
+
+            // Toggle password visibility
+            document.querySelectorAll('.toggle-password').forEach(icon => {
+                icon.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    const passwordInput = document.getElementById(targetId);
+                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordInput.setAttribute('type', type);
+                    this.classList.toggle('fa-eye');
+                    this.classList.toggle('fa-eye-slash');
+                });
+            });
+
+            // Password strength indicator
+            document.getElementById('password').addEventListener('input', function() {
+                const password = this.value;
+                const strengthBar = document.getElementById('password-strength-bar');
+                
+                strengthBar.className = 'password-strength-bar';
+                
+                if (password.length === 0) return;
+                
+                let strength = 0;
+                
+                if (password.length >= 8) strength += 1;
+                if (password.length >= 12) strength += 1;
+                
+                if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength += 1;
+                
+                if (/\d/.test(password)) strength += 1;
+                
+                if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+                
+                if (strength <= 2) {
+                    strengthBar.classList.add('strength-weak');
+                } else if (strength === 3) {
+                    strengthBar.classList.add('strength-medium');
+                } else if (strength === 4) {
+                    strengthBar.classList.add('strength-good');
+                } else {
+                    strengthBar.classList.add('strength-strong');
+                }
+            });
+
+            // Confirm password match
+            document.getElementById('confirmPassword').addEventListener('input', function() {
+                const password = document.getElementById('password').value;
+                const confirmPassword = this.value;
+                const errorElement = document.getElementById('confirm-error');
+                
+                if (confirmPassword && password !== confirmPassword) {
+                    errorElement.style.display = 'block';
+                } else {
+                    errorElement.style.display = 'none';
+                }
+            });
+
+            // Verification code input management
+            const verificationInputs = document.querySelectorAll('.verification-code input');
+            verificationInputs.forEach((input, index) => {
+                input.addEventListener('input', function() {
+                    if (this.value.length === 1 && index < verificationInputs.length - 1) {
+                        verificationInputs[index + 1].focus();
+                    }
+                });
+                
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Backspace' && this.value.length === 0 && index > 0) {
+                        verificationInputs[index - 1].focus();
+                    }
+                });
+            });
+        });
+
+        // Form submission
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            let isValid = true;
+            
+            // Validate full name
+            const fullName = document.getElementById('fullName').value.trim();
+            if (!fullName) {
+                document.getElementById('name-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate email
+            const email = document.getElementById('email').value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                document.getElementById('email-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate password
+            const password = document.getElementById('password').value;
+            if (password.length < 8) {
+                document.getElementById('password-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate password match
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            if (password !== confirmPassword) {
+                document.getElementById('confirm-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate country
+            const country = document.getElementById('country').value;
+            if (!country) {
+                document.getElementById('country-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate city
+            const city = document.getElementById('city').value.trim();
+            if (!city) {
+                document.getElementById('city-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate user type
+            const userType = document.getElementById('userType').value;
+            if (!userType) {
+                document.getElementById('userType-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate occupation
+            const occupation = document.getElementById('occupation').value.trim();
+            if (!occupation) {
+                document.getElementById('occupation-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate date of birth
+            const dobDay = document.getElementById('dob-day').value;
+            const dobMonth = document.getElementById('dob-month').value;
+            const dobYear = document.getElementById('dob-year').value;
+            if (!dobDay || !dobMonth || !dobYear) {
+                document.getElementById('dob-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate reCAPTCHA
+            if (grecaptcha.getResponse().length === 0) {
+                document.getElementById('recaptcha-error').style.display = 'block';
+                isValid = false;
+                document.querySelector('.g-recaptcha').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }
+            
+            // Validate terms agreement
+            const agreeTerms = document.getElementById('agreeTerms').checked;
+            if (!agreeTerms) {
+                document.getElementById('terms-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            if (isValid) {
+                // Here you would typically submit the form to your server
+                // For demonstration, we'll show the verification section
+                document.getElementById('registrationForm').style.display = 'none';
+                document.getElementById('verificationSection').style.display = 'block';
+                startCountdown();
+                console.log('Verification code sent to email');
+                
+                // In a real implementation, you would submit the form to your server
+                // this.submit();
+            }
+        });
+
+        // Verify button
+        document.getElementById('verifyBtn').addEventListener('click', function() {
+            const verificationInputs = document.querySelectorAll('.verification-code input');
+            let verificationCode = '';
+            
+            verificationInputs.forEach(input => {
+                verificationCode += input.value;
+            });
+            
+            if (verificationCode.length === 6) {
+                alert('Verification successful! Redirecting to dashboard.');
+                // window.location.href = 'dashboard.html';
+            } else {
+                alert('Please enter the 6-digit verification code');
+            }
+        });
+
+        // Resend code
+        document.getElementById('resendCode').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Verification code resent to your email');
+            startCountdown();
+        });
+
+        // Countdown timer
+        function startCountdown() {
+            let minutes = 10;
+            let seconds = 0;
+            const countdownElement = document.getElementById('countdown');
+            const resendLink = document.getElementById('resendCode');
+            
+            resendLink.style.pointerEvents = 'none';
+            resendLink.style.opacity = '0.5';
+            
+            const countdownInterval = setInterval(() => {
+                if (seconds === 0) {
+                    if (minutes === 0) {
+                        clearInterval(countdownInterval);
+                        resendLink.style.pointerEvents = 'auto';
+                        resendLink.style.opacity = '1';
+                        countdownElement.textContent = '';
+                        return;
+                    }
+                    minutes--;
+                    seconds = 59;
+                } else {
+                    seconds--;
+                }
+                
+                const formattedMinutes = minutes.toString().padStart(2, '0');
+                const formattedSeconds = seconds.toString().padStart(2, '0');
+                countdownElement.textContent = `(${formattedMinutes}:${formattedSeconds})`;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
