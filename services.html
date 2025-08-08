@@ -369,8 +369,10 @@
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="google_translate_element"></div>
     <header>
         <nav class="navbar">
             <div class="logo"><img src="images/LOGO PH.png" alt="Phoenix Rizze Logo"></div>
@@ -456,6 +458,8 @@
             </ul>
         </nav>
     </header>
+
+    <div id="warningMessage" class="warning-message hidden">Google Translate requires HTTP/HTTPS to work properly. Please host on a web server or use Live Server.</div>
     
     <main>
         <section class="hero">
@@ -707,46 +711,22 @@
             <p>&copy; 2025 PhoenixRizze. All Rights Reserved.</p>
         </div>
     </footer>
-    
+
     <script>
-        // Language switcher functionality
-        document.getElementById('languageSwitcher').addEventListener('change', function() {
-            // This would be replaced with actual language switching logic
-            alert('Language changed to: ' + this.value);
-            // In a real implementation, you would:
-            // 1. Load translations for the selected language
-            // 2. Update all text content on the page
-            // 3. Possibly change text direction for RTL languages like Arabic
-        });
-        
-        // Highlight active navigation link
-        document.addEventListener('DOMContentLoaded', function() {
-            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-            const navLinks = document.querySelectorAll('.nav-link');
-            
-            navLinks.forEach(link => {
-                if (link.getAttribute('href') === currentPage) {
-                    link.classList.add('active');
-                }
-            });
-        });
-        
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                
                 const targetId = this.getAttribute('href');
                 if (targetId === '#') return;
-                
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth'
-                    });
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
                 }
             });
         });
     </script>
+    <script src="script.js"></script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
