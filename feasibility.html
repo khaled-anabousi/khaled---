@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detailed Feasibility Study Questionnaire</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <style>
+    :root{
+      --brand:#0066cc; --brand-d:#0052a3; --ok:#28a745; --ok-d:#218838; --error:#dc3545;
+      --bg:#f2f4f7; --text:#333; --muted:#666; --card:#fff; --shadow:0 5px 15px rgba(0,0,0,.1); --border:#eee;
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif; background:var(--bg); color:var(--text)}
+    header{background:#fff; box-shadow:0 2px 10px rgba(0,0,0,.06); padding:10px 5%; display:flex; align-items:center; justify-content:space-between; position:relative}
+    .logo{height:60px; position:absolute; left:50%; transform:translateX(-50%)}
+    .language-switcher{background:var(--brand); color:#fff; border:none; padding:8px 14px; border-radius:6px; cursor:pointer}
+    .language-switcher:hover{background:var(--brand-d)}
+    .main-container{display:flex; max-width:1400px; margin:28px auto; gap:16px; padding:0 16px}
+    .form-container,.summary-container{background:var(--card); border-radius:12px; box-shadow:var(--shadow); padding:22px}
+    .form-container{flex:2}
+    .summary-container{flex:1; position:sticky; top:18px; height:fit-content; max-height:90vh; overflow:auto}
+    h2{color:var(--brand); margin:0 0 12px; text-align:center}
+    h3{color:var(--brand); display:flex; align-items:center; gap:8px; margin:26px 0 10px; padding-bottom:8px; border-bottom:1px solid var(--border)}
+    .section:first-of-type h3{margin-top:8px}
+    .form-group{margin-bottom:16px}
+    label{display:block; margin-bottom:8px; font-weight:600}
+    input,select,textarea{width:100%; padding:12px; border:1px solid #ccc; border-radius:6px; font-size:15px; background:#fff}
+    textarea{min-height:100px; resize:vertical}
+    .flex-row{display:flex; gap:12px}
+    .flex-row>div{flex:1}
+    .radio-group{display:flex; gap:14px; flex-wrap:wrap; margin-top:8px}
+    .radio-option{display:flex; align-items:center; gap:6px; white-space:nowrap}
+    .add-item-btn{background:#f8f9fa; border:1px dashed #ccc; border-radius:6px; padding:8px 10px; color:var(--brand); cursor:pointer}
+    .add-item-btn:hover{background:#e9ecef}
+    .item-row{display:flex; gap:10px; margin-bottom:10px; align-items:center}
+    .item-row input{flex:1}
+    .item-row button{background:#dc3545; color:#fff; border:none; border-radius:6px; padding:10px; cursor:pointer}
+    .item-row button:hover{background:#c82333}
+    .next-button{background:var(--ok); color:#fff; border:none; border-radius:8px; padding:12px 18px; font-size:16px; cursor:pointer; float:right; margin-top:16px}
+    .next-button:hover{background:var(--ok-d)}
+    .hidden{display:none!important}
+    .error{border-color:var(--error)!important}
+    .group-error{outline:2px solid var(--error); outline-offset:4px; border-radius:6px; padding:8px}
+    .summary-item{border-bottom:1px solid var(--border); padding:10px 0; margin:0 0 10px}
+    .summary-item h4{margin:0 0 6px}
+    .summary-item p,.summary-item li{color:var(--muted)}
+    @media (max-width:1200px){.main-container{flex-direction:column}.summary-container{position:static; max-height:none}}
+    @media (max-width:768px){.flex-row{flex-direction:column} header{flex-direction:column; padding-bottom:70px} .logo{position:static; transform:none; margin:10px 0} .language-switcher{position:absolute; top:10px; right:10px}}
+  </style>
+</head>
+<body>
+<header>
+  <button class="language-switcher" id="languageSwitcher">العربية</button>
+  <img src="images/LOGO PH.png" alt="Company Logo" class="logo">
+</header>
+
+<div class="main-container">
+  <div class="form-container">
+    <h2 id="pageTitle">Detailed Feasibility Study Questionnaire</h2>
+    <form id="detailedFeasibilityForm" novalidate>
+
+      <!-- Project Description -->
+      <div class="section" data-section="project">
+        <h3><i class="fas fa-lightbulb"></i><span class="section-title" data-en="Project Description" data-ar="وصف فكرة المشروع"> Project Description</span></h3>
+        <div class="form-group">
+          <label for="mainProduct">What is the main product or service your project offers? (Required)</label>
+          <input type="text" id="mainProduct" name="mainProduct" required placeholder="Example: Ready-made clothing, organic groceries, small electronics, natural cosmetics">
+        </div>
+        <div class="form-group">
+          <label for="problemSolved">What core problem does this product/service solve for target customers? (Required)</label>
+          <input type="text" id="problemSolved" name="problemSolved" required placeholder="Example: Lack of high-quality products at reasonable prices, unavailability of certain options in the area, difficulty accessing the product">
+        </div>
+        <div class="form-group">
+          <label for="businessModel">How does the project plan to generate profits (business model)? (Required)</label>
+          <select id="businessModel" name="businessModel" required>
+            <option value="">Select model</option>
+            <option value="direct_sales">Direct product sales in store</option>
+            <option value="online_sales">Online sales</option>
+            <option value="both">Combination of both</option>
+            <option value="subscription">Subscription model</option>
+            <option value="franchise">Franchise</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="distributionChannels">What are the main distribution channels to deliver the product/service to the customer? (Optional)</label>
+          <select id="distributionChannels" name="distributionChannels" multiple="multiple" class="select2">
+            <option value="physical_store">Physical store</option>
+            <option value="online_store">Online store</option>
+            <option value="mobile_app">Mobile app</option>
+            <option value="sales_agents">Sales agents</option>
+            <option value="wholesale">Wholesale</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Market Data -->
+      <div class="section" data-section="market">
+        <h3><i class="fas fa-chart-line"></i><span class="section-title" data-en="Market Data" data-ar="البيانات السوقية"> Market Data</span></h3>
+        <div class="flex-row">
+          <div class="form-group">
+            <label for="marketValue">Estimated annual market value (Required)</label>
+            <input type="number" id="marketValue" name="marketValue" required placeholder="Enter estimated value">
+          </div>
+          <div class="form-group">
+            <label for="potentialCustomers">Estimated number of potential customers in target area (Required)</label>
+            <input type="number" id="potentialCustomers" name="potentialCustomers" required placeholder="Enter number">
+          </div>
+        </div>
+        <div class="flex-row">
+          <div class="form-group">
+            <label for="growthRate">Estimated annual growth rate of this market (Required)</label>
+            <div class="flex-row">
+              <input type="number" id="growthRate" name="growthRate" required placeholder="Percentage" style="flex:1">
+              <span style="align-self:center">%</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="growthFactors">Main factors driving this growth/decline</label>
+            <input type="text" id="growthFactors" name="growthFactors" placeholder="Enter factors">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="competitorsCount">Number of main competitors in the target area (Required)</label>
+          <input type="number" id="competitorsCount" name="competitorsCount" required placeholder="Enter number">
+        </div>
+        <div class="form-group">
+          <label>Is there a clear market gap (unmet demand) that can be exploited? (Required)</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="marketGap" value="yes" required> Yes</label>
+            <label class="radio-option"><input type="radio" name="marketGap" value="no"> No</label>
+            <label class="radio-option"><input type="radio" name="marketGap" value="unsure"> Not sure</label>
+          </div>
+          <div id="marketGapDetails" class="hidden form-group">
+            <label for="gapExplanation">Please briefly explain:</label>
+            <input type="text" id="gapExplanation" name="gapExplanation" placeholder="Explain the market gap">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Is there sufficient demand and market feasibility for your project in this market?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="marketDemand" value="sufficient" required> Yes, sufficient demand</label>
+            <label class="radio-option"><input type="radio" name="marketDemand" value="saturated"> No, saturated market</label>
+            <label class="radio-option"><input type="radio" name="marketDemand" value="needs_study"> Needs deeper study</label>
+          </div>
+          <div class="form-group">
+            <label for="marketNotes">Notes</label>
+            <textarea id="marketNotes" name="marketNotes" placeholder="Any notes"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Marketing Data -->
+      <div class="section" data-section="marketing">
+        <h3><i class="fas fa-bullhorn"></i><span class="section-title" data-en="Marketing Data" data-ar="البيانات التسويقية"> Marketing Data</span></h3>
+        <div class="form-group">
+          <label>Who is the main target audience for your product/service? (Required)</label>
+          <div class="flex-row">
+            <div class="form-group">
+              <label for="ageFrom">Age from</label>
+              <input type="number" id="ageFrom" name="ageFrom" required placeholder="Minimum age">
+            </div>
+            <div class="form-group">
+              <label for="ageTo">to</label>
+              <input type="number" id="ageTo" name="ageTo" required placeholder="Maximum age">
+            </div>
+            <div class="form-group">
+              <label for="avgIncome">Estimated average monthly income</label>
+              <input type="number" id="avgIncome" name="avgIncome" required placeholder="Income amount">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="marketingChannels">Expected marketing channels to reach customers (Required)</label>
+          <select id="marketingChannels" name="marketingChannels" multiple="multiple" class="select2" required>
+            <option value="social_media">Social media ads</option>
+            <option value="content_marketing">Content marketing</option>
+            <option value="tv_radio">TV/Radio ads</option>
+            <option value="billboards">Billboards</option>
+            <option value="public_relations">Public relations</option>
+            <option value="influencers">Influencers</option>
+            <option value="email">Email marketing</option>
+            <option value="seo">SEO</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="marketingCost">Estimated initial monthly marketing cost (Required)</label>
+          <input type="number" id="marketingCost" name="marketingCost" required placeholder="Enter amount">
+        </div>
+        <div class="form-group">
+          <label for="competitiveAdvantage">Main competitive advantage (Unique Value Proposition) compared to competitors (Required)</label>
+          <input type="text" id="competitiveAdvantage" name="competitiveAdvantage" required placeholder="Example: Higher quality, competitive price, excellent customer service">
+        </div>
+        <div class="form-group">
+          <label>Can target customers be reached efficiently and profitably using the proposed channels and advantage?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="reachEfficiency" value="yes" required> Yes</label>
+            <label class="radio-option"><input type="radio" name="reachEfficiency" value="possible"> Possible</label>
+            <label class="radio-option"><input type="radio" name="reachEfficiency" value="challenges"> Major challenges</label>
+            <label class="radio-option"><input type="radio" name="reachEfficiency" value="unclear"> Unclear</label>
+          </div>
+          <div class="form-group">
+            <label for="reachNotes">Notes</label>
+            <textarea id="reachNotes" name="reachNotes" placeholder="Any notes"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Technical Data -->
+      <div class="section" data-section="technical">
+        <h3><i class="fas fa-cogs"></i><span class="section-title" data-en="Technical Data" data-ar="البيانات الفنية"> Technical Data</span></h3>
+        <div class="form-group">
+          <label for="proposedLocation">Proposed location for the store/showroom (city, district/area) (Required)</label>
+          <input type="text" id="proposedLocation" name="proposedLocation" required placeholder="City, district/area">
+        </div>
+        <div class="form-group">
+          <label>Foot/vehicle traffic at location:</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="trafficLevel" value="high" required> High</label>
+            <label class="radio-option"><input type="radio" name="trafficLevel" value="medium"> Medium</label>
+            <label class="radio-option"><input type="radio" name="trafficLevel" value="low"> Low</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Parking availability:</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="parkingAvailability" value="available" required> Easily available</label>
+            <label class="radio-option"><input type="radio" name="parkingAvailability" value="limited"> Limited</label>
+            <label class="radio-option"><input type="radio" name="parkingAvailability" value="unavailable"> Unavailable</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="attractionPoints">Proximity to attraction points (e.g., residential areas, markets, universities):</label>
+          <textarea id="attractionPoints" name="attractionPoints" placeholder="Notes about nearby attractions"></textarea>
+        </div>
+        <div class="flex-row">
+          <div class="form-group">
+            <label for="requiredArea">Required area for the project (in square meters) (Required)</label>
+            <input type="number" id="requiredArea" name="requiredArea" required placeholder="Enter area">
+          </div>
+          <div class="form-group">
+            <label>Will it be rented or owned? (Required)</label>
+            <div class="radio-group">
+              <label class="radio-option"><input type="radio" name="propertyType" value="rent" required> Rent</label>
+              <label class="radio-option"><input type="radio" name="propertyType" value="own"> Own</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="propertyCost">Rent/Purchase price</label>
+            <input type="number" id="propertyCost" name="propertyCost" placeholder="Enter amount" disabled class="disabled">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>List of basic equipment and furnishings required for the store (Required)</label>
+          <div id="equipmentList">
+            <div class="item-row">
+              <input type="text" name="equipmentName[]" placeholder="Equipment name" required>
+              <input type="number" name="equipmentCost[]" placeholder="Cost" required>
+              <button type="button" class="remove-item-btn" onclick="removeItem(this)"><i class="fas fa-trash"></i></button>
+            </div>
+          </div>
+          <button type="button" class="add-item-btn" onclick="addItem('equipmentList','equipment')"><i class="fas fa-plus"></i> Add Equipment</button>
+        </div>
+        <div class="form-group">
+          <label>Initial inventory requirements (type of goods, approximate quantity) (Required)</label>
+          <div class="flex-row">
+            <div class="form-group">
+              <label for="initialInventoryValue">Estimated value of initial inventory</label>
+              <input type="number" id="initialInventoryValue" name="initialInventoryValue" required placeholder="Enter amount">
+            </div>
+            <div class="form-group">
+              <label for="mainGoodsTypes">Main types of goods</label>
+              <input type="text" id="mainGoodsTypes" name="mainGoodsTypes" required placeholder="List main goods types">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Can the project be technically implemented effectively with the required capabilities?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="technicalImplementation" value="yes" required> Yes, possible</label>
+            <label class="radio-option"><input type="radio" name="technicalImplementation" value="challenges"> Technical challenges</label>
+            <label class="radio-option"><input type="radio" name="technicalImplementation" value="unclear"> Unclear</label>
+          </div>
+          <div class="form-group">
+            <label for="technicalNotes">Notes</label>
+            <textarea id="technicalNotes" name="technicalNotes" placeholder="Any notes"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Technological Data -->
+      <div class="section" data-section="technology">
+        <h3><i class="fas fa-microchip"></i><span class="section-title" data-en="Technological Data" data-ar="البيانات التكنولوجية"> Technological Data</span></h3>
+        <div class="form-group">
+          <label>Basic technology used in the project (Required)</label>
+          <div id="technologyList">
+            <div class="item-row">
+              <input type="text" name="technologyName[]" placeholder="Technology/Equipment name" required>
+              <input type="number" name="technologyCost[]" placeholder="Cost" required>
+              <button type="button" class="remove-item-btn" onclick="removeItem(this)"><i class="fas fa-trash"></i></button>
+            </div>
+          </div>
+          <button type="button" class="add-item-btn" onclick="addItem('technologyList','technology')"><i class="fas fa-plus"></i> Add Technology</button>
+        </div>
+        <div class="form-group">
+          <label>Is this technology modern and keeping up with current requirements? (Required)</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="technologyModern" value="yes" required> Yes</label>
+            <label class="radio-option"><input type="radio" name="technologyModern" value="no"> No</label>
+            <label class="radio-option"><input type="radio" name="technologyModern" value="partially"> Partially</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Are there expected difficulties in maintenance or technical support for this technology? (Optional)</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="maintenanceDifficulties" value="yes"> Yes</label>
+            <label class="radio-option"><input type="radio" name="maintenanceDifficulties" value="no"> No</label>
+            <label class="radio-option"><input type="radio" name="maintenanceDifficulties" value="unsure"> Not sure</label>
+          </div>
+          <div id="maintenanceDetails" class="hidden form-group">
+            <label for="difficultiesExplanation">If yes, please briefly explain:</label>
+            <input type="text" id="difficultiesExplanation" name="difficultiesExplanation" placeholder="Explain difficulties">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>How dependent is the project on external suppliers to provide or maintain this technology? (Optional)</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="supplierDependence" value="full"> Full dependence</label>
+            <label class="radio-option"><input type="radio" name="supplierDependence" value="partial"> Partial dependence</label>
+            <label class="radio-option"><input type="radio" name="supplierDependence" value="none"> No dependence</label>
+          </div>
+          <div id="maintenanceCostContainer" class="hidden form-group">
+            <label for="annualMaintenanceCost">Estimated annual maintenance cost</label>
+            <input type="number" id="annualMaintenanceCost" name="annualMaintenanceCost" placeholder="Enter amount">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Is the proposed technology safe, sustainable, and effectively meets project needs?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="technologySustainability" value="sustainable" required> Yes, sustainable</label>
+            <label class="radio-option"><input type="radio" name="technologySustainability" value="risks"> Technical risks</label>
+            <label class="radio-option"><input type="radio" name="technologySustainability" value="needs_assessment"> Needs assessment</label>
+          </div>
+          <div class="form-group">
+            <label for="technologyNotes">Notes</label>
+            <textarea id="technologyNotes" name="technologyNotes" placeholder="Any notes"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Operational Data -->
+      <div class="section" data-section="operational">
+        <h3><i class="fas fa-tasks"></i><span class="section-title" data-en="Operational Data" data-ar="البيانات التشغيلية"> Operational Data</span></h3>
+        <div class="form-group">
+          <label>Total number of employees required to operate the project in its initial phase (Required)</label>
+          <div id="employeesList">
+            <div class="item-row">
+              <input type="text" name="employeePosition[]" placeholder="Position" required>
+              <input type="number" name="employeeCount[]" placeholder="Number" required min="1">
+              <input type="number" name="employeeSalary[]" placeholder="Salary" required>
+              <button type="button" class="remove-item-btn" onclick="removeItem(this)"><i class="fas fa-trash"></i></button>
+            </div>
+          </div>
+          <button type="button" class="add-item-btn" onclick="addItem('employeesList','employee')"><i class="fas fa-plus"></i> Add Employee</button>
+        </div>
+        <div class="form-group">
+          <label for="dailyOperations">Main daily operations the project will perform (Required)</label>
+          <textarea id="dailyOperations" name="dailyOperations" required placeholder="Example: Receiving goods, product display, customer service, sales operations, inventory management"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Can the project operate efficiently and effectively continuously based on initial plans?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="operationEfficiency" value="yes" required> Yes, possible</label>
+            <label class="radio-option"><input type="radio" name="operationEfficiency" value="challenges"> Potential challenges</label>
+            <label class="radio-option"><input type="radio" name="operationEfficiency" value="unclear"> Unclear</label>
+          </div>
+          <div class="form-group">
+            <label for="operationNotes">Notes</label>
+            <textarea id="operationNotes" name="operationNotes" placeholder="Any notes"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Organizational Data -->
+      <div class="section" data-section="organizational">
+        <h3><i class="fas fa-sitemap"></i><span class="section-title" data-en="Organizational Data" data-ar="البيانات التنظيمية"> Organizational Data</span></h3>
+        <div class="form-group">
+          <label for="managementStructure">Proposed management structure for the project in its initial phases (Required)</label>
+          <select id="managementStructure" name="managementStructure" multiple="multiple" class="select2" required>
+            <option value="owner_manager">Owner/Manager</option>
+            <option value="sales_staff">Sales staff</option>
+            <option value="accountant">Accountant</option>
+            <option value="marketing_specialist">Marketing specialist</option>
+            <option value="inventory_manager">Inventory manager</option>
+            <option value="customer_service">Customer service</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="decisionMechanism">Main decision-making mechanism in the project (Required)</label>
+          <select id="decisionMechanism" name="decisionMechanism" required>
+            <option value="">Select mechanism</option>
+            <option value="centralized">Centralized decisions from owner</option>
+            <option value="delegated">Delegated to store manager</option>
+            <option value="committee">Committee/team decisions</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Are there specific governance requirements (e.g., periodic meetings, performance reports) to be applied? (Optional)</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="governanceRequirements" value="yes"> Yes</label>
+            <label class="radio-option"><input type="radio" name="governanceRequirements" value="no"> No</label>
+            <label class="radio-option"><input type="radio" name="governanceRequirements" value="unsure"> Not sure</label>
+          </div>
+          <div id="governanceDetails" class="hidden form-group">
+            <label for="requirementsExplanation">If yes, please briefly explain:</label>
+            <input type="text" id="requirementsExplanation" name="requirementsExplanation" placeholder="Explain requirements">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Is the project effectively and appropriately organized administratively for its initial size?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="organizationEffectiveness" value="effective" required> Yes, effective</label>
+            <label class="radio-option"><input type="radio" name="organizationEffectiveness" value="needs_improvement"> Needs improvement</label>
+            <label class="radio-option"><input type="radio" name="organizationEffectiveness" value="unclear"> Unclear</label>
+          </div>
+          <div class="form-group">
+            <label for="organizationNotes">Notes</label>
+            <textarea id="organizationNotes" name="organizationNotes" placeholder="Any notes"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Legal Data -->
+      <div class="section" data-section="legal">
+        <h3><i class="fas fa-gavel"></i><span class="section-title" data-en="Legal Data" data-ar="البيانات القانونية"> Legal Data</span></h3>
+        <div class="form-group">
+          <label>Is the project legal in the concerned country? (Required)</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="projectLegality" value="yes" required> Yes</label>
+            <label class="radio-option"><input type="radio" name="projectLegality" value="no"> No</label>
+            <label class="radio-option"><input type="radio" name="projectLegality" value="unsure"> Not sure</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Basic licenses and permits needed to start operations (Required)</label>
+          <div id="licensesList">
+            <div class="item-row">
+              <input type="text" name="licenseType[]" placeholder="License type" required>
+              <input type="number" name="licenseCost[]" placeholder="Cost" required>
+              <button type="button" class="remove-item-btn" onclick="removeItem(this)"><i class="fas fa-trash"></i></button>
+            </div>
+          </div>
+          <button type="button" class="add-item-btn" onclick="addItem('licensesList','license')"><i class="fas fa-plus"></i> Add License</button>
+        </div>
+        <div class="form-group">
+          <label>Are there any potential legal risks the project might face? (Required)</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="legalRisks" value="yes" required> Yes</label>
+            <label class="radio-option"><input type="radio" name="legalRisks" value="no"> No</label>
+          </div>
+          <div id="legalRisksDetails" class="hidden form-group">
+            <label for="risksExplanation">If yes, please explain:</label>
+            <textarea id="risksExplanation" name="risksExplanation" placeholder="Example: Import restrictions, new tax laws, consumer protection, trademarks"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Are there any real legal obstacles or major challenges to project implementation?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="legalObstacles" value="none" required> No obstacles</label>
+            <label class="radio-option"><input type="radio" name="legalObstacles" value="overcomable"> Overcomable obstacles</label>
+            <label class="radio-option"><input type="radio" name="legalObstacles" value="major"> Major obstacles</label>
+          </div>
+          <div class="form-group">
+            <label for="legalNotes">Notes</label>
+            <textarea id="legalNotes" name="legalNotes" placeholder="Any notes"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Environmental Data -->
+      <div class="section" data-section="environmental">
+        <h3><i class="fas fa-leaf"></i><span class="section-title" data-en="Environmental Data" data-ar="البيانات البيئية"> Environmental Data</span></h3>
+        <div class="form-group">
+          <label>Does the project directly or indirectly affect the environment? (Required)</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="environmentalImpact" value="yes" required> Yes</label>
+            <label class="radio-option"><input type="radio" name="environmentalImpact" value="no"> No</label>
+            <label class="radio-option"><input type="radio" name="environmentalImpact" value="unsure"> Not sure</label>
+          </div>
+          <div id="impactDetails" class="hidden form-group">
+            <label for="impactExplanation">If yes, please briefly explain (e.g., waste management, energy consumption, emissions):</label>
+            <textarea id="impactExplanation" name="impactExplanation" placeholder="Explain environmental impact"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Does the project need an environmental impact assessment or special environmental approvals? (Optional)</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="environmentalAssessment" value="yes"> Yes</label>
+            <label class="radio-option"><input type="radio" name="environmentalAssessment" value="no"> No</label>
+            <label class="radio-option"><input type="radio" name="environmentalAssessment" value="unsure"> Not sure</label>
+          </div>
+          <div id="assessmentDetails" class="hidden form-group">
+            <label for="assessmentExplanation">If yes, please explain:</label>
+            <textarea id="assessmentExplanation" name="assessmentExplanation" placeholder="Explain assessment requirements"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Is the project generally environmentally friendly or does it need to address important environmental issues?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="environmentalFriendliness" value="friendly" required> Environmentally friendly</label>
+            <label class="radio-option"><input type="radio" name="environmentalFriendliness" value="needs_treatment"> Needs treatment</label>
+            <label class="radio-option"><input type="radio" name="environmentalFriendliness" value="negative_impact"> Significant negative impact</label>
+          </div>
+          <div class="form-group">
+            <label for="environmentalNotes">Notes</label>
+            <textarea id="environmentalNotes" name="environmentalNotes" placeholder="Any notes"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Social Data -->
+      <div class="section" data-section="social">
+        <h3><i class="fas fa-users"></i><span class="section-title" data-en="Social Data" data-ar="البيانات الاجتماعية"> Social Data</span></h3>
+        <div class="form-group">
+          <label for="socialImpact">Expected impact of the project on the surrounding community (Required)</label>
+          <textarea id="socialImpact" name="socialImpact" required placeholder="Example: Providing job opportunities, improving service level, increasing economic activity in the area"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="jobOpportunities">Estimated number of job opportunities the project will generate in its initial phase (Required)</label>
+          <input type="number" id="jobOpportunities" name="jobOpportunities" required placeholder="Enter number">
+        </div>
+        <div class="form-group">
+          <label>Does the project have a general positive social impact aligned with community development goals?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="socialFeasibility" value="high" required> Significant positive impact</label>
+            <label class="radio-option"><input type="radio" name="socialFeasibility" value="limited"> Limited positive impact</label>
+            <label class="radio-option"><input type="radio" name="socialFeasibility" value="unclear"> Unclear</label>
+          </div>
+          <div class="form-group">
+            <label for="socialNotes">Notes</label>
+            <textarea id="socialNotes" name="socialNotes" placeholder="Any notes"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cultural Data -->
+      <div class="section" data-section="cultural">
+        <h3><i class="fas fa-monument"></i><span class="section-title" data-en="Cultural Data" data-ar="البيانات الثقافية"> Cultural Data</span></h3>
+        <div class="form-group">
+          <label>Does the product/service or its delivery method align with the local culture and values of the target community? (Required)</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="culturalAlignment" value="yes" required> Yes</label>
+            <label class="radio-option"><input type="radio" name="culturalAlignment" value="no"> No</label>
+            <label class="radio-option"><input type="radio" name="culturalAlignment" value="partially"> Partially</label>
+          </div>
+          <div class="form-group">
+            <label for="alignmentExplanation">Please briefly explain:</label>
+            <textarea id="alignmentExplanation" name="alignmentExplanation" placeholder="Explain cultural alignment"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Is there potential for community or cultural rejection of the idea or project? (Required)</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="culturalRejection" value="yes" required> Yes</label>
+            <label class="radio-option"><input type="radio" name="culturalRejection" value="no"> No</label>
+            <label class="radio-option"><input type="radio" name="culturalRejection" value="unexpected"> Not expected</label>
+          </div>
+          <div id="rejectionDetails" class="hidden form-group">
+            <label for="rejectionReason">If yes, what is the potential reason?</label>
+            <textarea id="rejectionReason" name="rejectionReason" placeholder="Explain potential reasons for rejection"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Is the project culturally acceptable in the target implementation environment?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="culturalAcceptance" value="highly" required> Highly acceptable</label>
+            <label class="radio-option"><input type="radio" name="culturalAcceptance" value="with_challenges"> Acceptable with challenges</label>
+            <label class="radio-option"><input type="radio" name="culturalAcceptance" value="unacceptable"> Unacceptable</label>
+          </div>
+          <div class="form-group">
+            <label for="culturalNotes">Notes</label>
+            <textarea id="culturalNotes" name="culturalNotes" placeholder="Any notes"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Behavioral Data -->
+      <div class="section" data-section="behavioral">
+        <h3><i class="fas fa-brain"></i><span class="section-title" data-en="Behavioral Data" data-ar="البيانات السلوكية"> Behavioral Data</span></h3>
+        <div class="form-group">
+          <label>Does the proposed product/service align with current purchasing behaviors and consumption habits of target customers? (Required)</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="behaviorAlignment" value="yes" required> Yes</label>
+            <label class="radio-option"><input type="radio" name="behaviorAlignment" value="no"> No</label>
+            <label class="radio-option"><input type="radio" name="behaviorAlignment" value="partially"> Partially</label>
+          </div>
+          <div class="form-group">
+            <label for="behaviorExplanation">Please briefly explain:</label>
+            <textarea id="behaviorExplanation" name="behaviorExplanation" placeholder="Explain behavioral alignment"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Is there expected behavioral resistance to change or adopting the new product/service? (Required)</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="behaviorResistance" value="yes" required> Yes</label>
+            <label class="radio-option"><input type="radio" name="behaviorResistance" value="no"> No</label>
+            <label class="radio-option"><input type="radio" name="behaviorResistance" value="unexpected"> Not expected</label>
+          </div>
+          <div id="resistanceDetails" class="hidden form-group">
+            <label for="resistanceReason">If yes, what is the potential reason?</label>
+            <textarea id="resistanceReason" name="resistanceReason" placeholder="Explain potential reasons for resistance"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Does the general behavior of target customers support the project idea and ensure easy adoption?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="customerSupport" value="strong" required> Strongly supports</label>
+            <label class="radio-option"><input type="radio" name="customerSupport" value="needs_effort"> Needs effort</label>
+            <label class="radio-option"><input type="radio" name="customerSupport" value="high_resistance"> High resistance</label>
+          </div>
+          <div class="form-group">
+            <label for="behavioralNotes">Notes</label>
+            <textarea id="behavioralNotes" name="behavioralNotes" placeholder="Any notes"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Political Data -->
+      <div class="section" data-section="political">
+        <h3><i class="fas fa-landmark"></i><span class="section-title" data-en="Political Data" data-ar="البيانات السياسية"> Political Data</span></h3>
+        <div class="form-group">
+          <label>Is there sufficient political stability in the target region/country to ensure project continuity? (Required)</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="politicalStability" value="yes" required> Yes</label>
+            <label class="radio-option"><input type="radio" name="politicalStability" value="no"> No</label>
+            <label class="radio-option"><input type="radio" name="politicalStability" value="partially"> Partially</label>
+          </div>
+          <div class="form-group">
+            <label for="stabilityExplanation">Please briefly explain:</label>
+            <textarea id="stabilityExplanation" name="stabilityExplanation" placeholder="Explain political stability"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Is the project exposed to potential changes in regulations, laws, or government policies that might negatively affect it? (Required)</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="regulationChanges" value="yes" required> Yes</label>
+            <label class="radio-option"><input type="radio" name="regulationChanges" value="no"> No</label>
+            <label class="radio-option"><input type="radio" name="regulationChanges" value="unexpected"> Not expected</label>
+          </div>
+          <div id="changesDetails" class="hidden form-group">
+            <label for="changesExplanation">If yes, please mention the most prominent of these potential changes:</label>
+            <textarea id="changesExplanation" name="changesExplanation" placeholder="Explain potential changes"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Is there a major political risk to project sustainability?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="politicalRisk" value="low" required> Low risk</label>
+            <label class="radio-option"><input type="radio" name="politicalRisk" value="medium"> Medium risk</label>
+            <label class="radio-option"><input type="radio" name="politicalRisk" value="high"> High risk</label>
+          </div>
+          <div class="form-group">
+            <label for="politicalNotes">Notes</label>
+            <textarea id="politicalNotes" name="politicalNotes" placeholder="Any notes"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Temporal Data -->
+      <div class="section" data-section="temporal">
+        <h3><i class="fas fa-clock"></i><span class="section-title" data-en="Temporal Data" data-ar="البيانات الزمنية"> Temporal Data</span></h3>
+        <div class="form-group">
+          <label>Is the proposed timeframe appropriate to exploit the current market opportunity? (Required)</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="timeframeAppropriate" value="yes" required> Yes, appropriate</label>
+            <label class="radio-option"><input type="radio" name="timeframeAppropriate" value="late"> Might be late</label>
+            <label class="radio-option"><input type="radio" name="timeframeAppropriate" value="no_effect"> No effect</label>
+          </div>
+          <div class="form-group">
+            <label for="timeframeNotes">Notes</label>
+            <textarea id="timeframeNotes" name="timeframeNotes" placeholder="Example: Is the market changing rapidly? Are there limited time windows to exploit?"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Is the proposed timing for project implementation appropriate for its success?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="timingAppropriate" value="highly" required> Highly appropriate</label>
+            <label class="radio-option"><input type="radio" name="timingAppropriate" value="needs_acceleration"> Needs acceleration</label>
+            <label class="radio-option"><input type="radio" name="timingAppropriate" value="inappropriate"> Inappropriate</label>
+          </div>
+          <div class="form-group">
+            <label for="timingNotes">Notes</label>
+            <textarea id="timingNotes" name="timingNotes" placeholder="Any notes"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Risk Data -->
+      <div class="section" data-section="risk">
+        <h3><i class="fas fa-exclamation-triangle"></i><span class="section-title" data-en="Risk Data" data-ar="بيانات المخاطر"> Risk Data</span></h3>
+        <div class="form-group">
+          <label>What are the main risks (other than those mentioned in previous sections) the project might face? (Required)</label>
+          <div id="risksList">
+            <div class="item-row">
+              <input type="text" name="riskName[]" placeholder="Risk description" required>
+              <input type="number" name="riskProbability[]" placeholder="Probability (1-5)" min="1" max="5" required>
+              <input type="number" name="riskImpact[]" placeholder="Impact (1-5)" min="1" max="5" required>
+              <button type="button" class="remove-item-btn" onclick="removeItem(this)"><i class="fas fa-trash"></i></button>
+            </div>
+          </div>
+          <button type="button" class="add-item-btn" onclick="addItem('risksList','risk')"><i class="fas fa-plus"></i> Add Risk</button>
+          <p>Probability/Impact scale: 1=Very low, 5=Very high</p>
+        </div>
+        <div class="form-group">
+          <label>Is there a preliminary contingency plan to face these risks? (Optional)</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="contingencyPlan" value="yes"> Yes</label>
+            <label class="radio-option"><input type="radio" name="contingencyPlan" value="no"> No</label>
+            <label class="radio-option"><input type="radio" name="contingencyPlan" value="partially"> Partially</label>
+          </div>
+          <div id="planDetails" class="hidden form-group">
+            <label for="planExplanation">If yes, please briefly explain:</label>
+            <textarea id="planExplanation" name="planExplanation" placeholder="Explain contingency plan"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Can the main risks be controlled or mitigated effectively?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="riskControl" value="yes" required> Yes, can be controlled</label>
+            <label class="radio-option"><input type="radio" name="riskControl" value="challenges"> Major challenges</label>
+            <label class="radio-option"><input type="radio" name="riskControl" value="high_risk"> Very high risk</label>
+          </div>
+          <div class="form-group">
+            <label for="riskNotes">Notes</label>
+            <textarea id="riskNotes" name="riskNotes" placeholder="Any notes"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Economic Data -->
+      <div class="section" data-section="economic">
+        <h3><i class="fas fa-chart-pie"></i><span class="section-title" data-en="Economic Data" data-ar="البيانات الاقتصادية"> Economic Data</span></h3>
+        <div class="form-group">
+          <label for="economicValue">What is the expected added value of the project to the economy and society as a whole? (Required)</label>
+          <textarea id="economicValue" name="economicValue" required placeholder="Example: Contribution to GDP, job creation, area revitalization, increasing exports/reducing imports"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Is the project expected to positively affect GDP or exports/imports? (Required)</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="gdpImpact" value="yes" required> Yes</label>
+            <label class="radio-option"><input type="radio" name="gdpImpact" value="no"> No</label>
+            <label class="radio-option"><input type="radio" name="gdpImpact" value="limited"> Limited impact</label>
+          </div>
+          <div id="gdpDetails" class="hidden form-group">
+            <label for="gdpExplanation">If yes, please briefly explain:</label>
+            <textarea id="gdpExplanation" name="gdpExplanation" placeholder="Explain GDP impact"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Does the project have general economic feasibility that contributes to development?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="economicFeasibility" value="high" required> High economic feasibility</label>
+            <label class="radio-option"><input type="radio" name="economicFeasibility" value="medium"> Medium economic feasibility</label>
+            <label class="radio-option"><input type="radio" name="economicFeasibility" value="limited"> Limited economic feasibility</label>
+          </div>
+          <div class="form-group">
+            <label for="economicNotes">Notes</label>
+            <textarea id="economicNotes" name="economicNotes" placeholder="Any notes"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Financial Data -->
+      <div class="section" data-section="financial">
+        <h3><i class="fas fa-money-bill-wave"></i><span class="section-title" data-en="Financial Data" data-ar="البيانات المالية"> Financial Data</span></h3>
+        <div class="form-group">
+          <label>Is the total capital required to start and operate the project in its initial phases sufficiently excellent? (Required)</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="capitalSufficiency" value="yes" required> Yes</label>
+            <label class="radio-option"><input type="radio" name="capitalSufficiency" value="no"> No</label>
+            <label class="radio-option"><input type="radio" name="capitalSufficiency" value="minimum"> At minimum required</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Are the expected monthly operational costs appropriate? (Required)</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="operationalCosts" value="yes" required> Yes</label>
+            <label class="radio-option"><input type="radio" name="operationalCosts" value="no"> No</label>
+            <label class="radio-option"><input type="radio" name="operationalCosts" value="minimum"> At minimum required</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Is the estimated payback period for invested capital feasible? (Required)</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="paybackFeasibility" value="yes" required> Yes</label>
+            <label class="radio-option"><input type="radio" name="paybackFeasibility" value="no"> No</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Do you expect the project to achieve a return on investment (ROI) or internal rate of return (IRR) that is initially feasible? (Optional)</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="roiFeasibility" value="yes"> Yes</label>
+            <label class="radio-option"><input type="radio" name="roiFeasibility" value="no"> No</label>
+            <label class="radio-option"><input type="radio" name="roiFeasibility" value="unsure"> Not sure</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Is the project financially feasible and capable of achieving the required profits?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="financialFeasibility" value="high" required> Highly feasible</label>
+            <label class="radio-option"><input type="radio" name="financialFeasibility" value="challenges"> Feasible with some challenges</label>
+            <label class="radio-option"><input type="radio" name="financialFeasibility" value="not"> Not financially feasible</label>
+          </div>
+          <div class="form-group">
+            <label for="financialNotes">Notes</label>
+            <textarea id="financialNotes" name="financialNotes" placeholder="Any notes"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Will the project rely on any additional investments? (Required)</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="additionalInvestments" value="yes" required> Yes</label>
+            <label class="radio-option"><input type="radio" name="additionalInvestments" value="no"> No</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="investmentComparison">Do you want to compare the project with other investments? (Optional)</label>
+          <select id="investmentComparison" name="investmentComparison" multiple="multiple" class="select2">
+            <option value="cryptocurrencies">Cryptocurrencies</option>
+            <option value="company_stocks">Company stocks</option>
+            <option value="metals">Metals</option>
+            <option value="bank_bonds">Bank bonds</option>
+            <option value="deposits">Deposits</option>
+          </select>
+        </div>
+      </div>
+
+      <button type="submit" class="next-button" id="submitBtn">Save and Continue <i class="fas fa-arrow-right"></i></button>
+    </form>
+  </div>
+
+  <div class="summary-container">
+    <h2 id="summaryTitle">Project Summary</h2>
+    <div id="projectSummary">
+      <div class="summary-item"><p>No data entered yet. Summary will appear here as you fill the form.</p></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+  let currentLanguage = 'en';
+  const MAX_ITEMS = 20;
+
+  $(function(){
+    // Initialize select2
+    $('.select2').select2({ width:'100%', allowClear:true, placeholder:'' });
+
+    // Language switcher: Arabic only for TITLES
+    $('#languageSwitcher').on('click', function(){
+      if(currentLanguage==='en'){ switchTitlesToArabic(); currentLanguage='ar'; $(this).text('English'); }
+      else { switchTitlesToEnglish(); currentLanguage='en'; $(this).text('العربية'); }
+      updateSummary();
+    });
+
+    bindConditionalToggles();
+
+    // Enable propertyCost once propertyType selected
+    $('input[name="propertyType"]').on('change', function(){
+      $('#propertyCost').prop('disabled', false).removeClass('disabled');
+    });
+
+    // Validate + submit
+    $('#detailedFeasibilityForm').on('submit', onSubmit);
+
+    // Update summary on any change
+    $('#detailedFeasibilityForm').on('input change', updateSummary);
+
+    updateSummary();
+  });
+
+  function bindConditionalToggles(){
+    $('input[name="marketGap"]').on('change', ()=> toggleHidden('#marketGapDetails', getRadioVal('marketGap')==='yes'));
+    $('input[name="maintenanceDifficulties"]').on('change', ()=> toggleHidden('#maintenanceDetails', getRadioVal('maintenanceDifficulties')==='yes'));
+    $('input[name="supplierDependence"]').on('change', ()=> toggleHidden('#maintenanceCostContainer', getRadioVal('supplierDependence')!=='none'));
+    $('input[name="governanceRequirements"]').on('change', ()=> toggleHidden('#governanceDetails', getRadioVal('governanceRequirements')==='yes'));
+    $('input[name="legalRisks"]').on('change', ()=> toggleHidden('#legalRisksDetails', getRadioVal('legalRisks')==='yes'));
+    $('input[name="environmentalImpact"]').on('change', ()=> toggleHidden('#impactDetails', getRadioVal('environmentalImpact')==='yes'));
+    $('input[name="environmentalAssessment"]').on('change', ()=> toggleHidden('#assessmentDetails', getRadioVal('environmentalAssessment')==='yes'));
+    $('input[name="culturalRejection"]').on('change', ()=> toggleHidden('#rejectionDetails', getRadioVal('culturalRejection')==='yes'));
+    $('input[name="behaviorResistance"]').on('change', ()=> toggleHidden('#resistanceDetails', getRadioVal('behaviorResistance')==='yes'));
+    $('input[name="regulationChanges"]').on('change', ()=> toggleHidden('#changesDetails', getRadioVal('regulationChanges')==='yes'));
+    $('input[name="contingencyPlan"]').on('change', ()=> toggleHidden('#planDetails', getRadioVal('contingencyPlan')==='yes'));
+    $('input[name="gdpImpact"]').on('change', ()=> toggleHidden('#gdpDetails', getRadioVal('gdpImpact')==='yes'));
+  }
+
+  function toggleHidden(sel, show){ $(sel).toggleClass('hidden', !show); }
+
+  function getRadioVal(name){ const el=document.querySelector(`input[name="${name}"]:checked`); return el?el.value:''; }
+
+  function onSubmit(e){
+    e.preventDefault();
+    clearErrors();
+    const ok = validateForm();
+    if(!ok){
+      alert(currentLanguage==='ar'? 'الرجاء ملء جميع الحقول الإلزامية بشكل صحيح' : 'Please fill all required fields correctly');
+      const firstErr = document.querySelector('.error, .group-error');
+      if(firstErr){ firstErr.scrollIntoView({behavior:'smooth', block:'center'}); }
+      return;
+    }
+    updateSummary();
+    alert(currentLanguage==='ar'? 'تم الحفظ بنجاح' : 'Saved successfully');
+  }
+
+  function clearErrors(){
+    $('#detailedFeasibilityForm .error').removeClass('error');
+    $('#detailedFeasibilityForm .group-error').removeClass('group-error');
+  }
+
+  function validateForm(){
+    let valid=true; const form=document.getElementById('detailedFeasibilityForm');
+    // text/number/textarea
+    form.querySelectorAll('input[required]:not([type="radio"]):not([type="checkbox"]), textarea[required]').forEach(el=>{
+      if(String(el.value||'').trim()===''){ el.classList.add('error'); valid=false; }
+    });
+    // selects
+    form.querySelectorAll('select[required]').forEach(sel=>{
+      const v=$(sel).val(); const empty = Array.isArray(v) ? v.length===0 : (v===null || v==='');
+      if(empty){ sel.classList.add('error'); valid=false; }
+    });
+    // radio groups
+    const names=new Set(); form.querySelectorAll('input[type="radio"][required]').forEach(r=>names.add(r.name));
+    names.forEach(name=>{
+      if(!form.querySelector(`input[name="${name}"]:checked`)){
+        const group = form.querySelector(`input[name="${name}"]`)?.closest('.form-group');
+        if(group){ group.classList.add('group-error'); }
+        valid=false;
+      }
+    });
+    return valid;
+  }
+
+  function addItem(listId, type){
+    const list=document.getElementById(listId);
+    const count=list.querySelectorAll('.item-row').length;
+    if(count>=MAX_ITEMS){ alert(currentLanguage==='ar'?'لقد وصلت إلى الحد الأقصى للعناصر (20)':'You have reached the maximum number of items (20)'); return; }
+    const row=document.createElement('div'); row.className='item-row';
+    if(type==='equipment'){
+      row.innerHTML=`
+        <input type="text" name="equipmentName[]" placeholder="Equipment name" required>
+        <input type="number" name="equipmentCost[]" placeholder="Cost" required>
+        <button type="button" class="remove-item-btn" onclick="removeItem(this)"><i class="fas fa-trash"></i></button>`;
+    } else if(type==='technology'){
+      row.innerHTML=`
+        <input type="text" name="technologyName[]" placeholder="Technology/Equipment name" required>
+        <input type="number" name="technologyCost[]" placeholder="Cost" required>
+        <button type="button" class="remove-item-btn" onclick="removeItem(this)"><i class="fas fa-trash"></i></button>`;
+    } else if(type==='employee'){
+      row.innerHTML=`
+        <input type="text" name="employeePosition[]" placeholder="Position" required>
+        <input type="number" name="employeeCount[]" placeholder="Number" min="1" required>
+        <input type="number" name="employeeSalary[]" placeholder="Salary" required>
+        <button type="button" class="remove-item-btn" onclick="removeItem(this)"><i class="fas fa-trash"></i></button>`;
+    } else if(type==='license'){
+      row.innerHTML=`
+        <input type="text" name="licenseType[]" placeholder="License type" required>
+        <input type="number" name="licenseCost[]" placeholder="Cost" required>
+        <button type="button" class="remove-item-btn" onclick="removeItem(this)"><i class="fas fa-trash"></i></button>`;
+    } else if(type==='risk'){
+      row.innerHTML=`
+        <input type="text" name="riskName[]" placeholder="Risk description" required>
+        <input type="number" name="riskProbability[]" placeholder="Probability (1-5)" min="1" max="5" required>
+        <input type="number" name="riskImpact[]" placeholder="Impact (1-5)" min="1" max="5" required>
+        <button type="button" class="remove-item-btn" onclick="removeItem(this)"><i class="fas fa-trash"></i></button>`;
+    }
+    list.appendChild(row);
+    updateSummary();
+  }
+
+  function removeItem(btn){
+    const parent=btn.closest('.item-row').parentElement;
+    if(parent.querySelectorAll('.item-row').length<=1){ alert(currentLanguage==='ar'?'يجب أن يحتوي النموذج على عنصر واحد على الأقل':'Form must contain at least one item'); return; }
+    btn.closest('.item-row').remove();
+    updateSummary();
+  }
+
+  function updateSummary(){
+    const $summary=$('#projectSummary');
+    let html='';
+    document.querySelectorAll('.section').forEach(section=>{
+      let sectionItems='';
+
+      // Radios: summarize per group within this section
+      const radioNames=new Set();
+      section.querySelectorAll('.radio-group input[type="radio"]').forEach(r=>radioNames.add(r.name));
+      radioNames.forEach(name=>{
+        const inputs=section.querySelectorAll(`.radio-group input[name="${name}"]`);
+        if(inputs.length===0) return;
+        const selected=section.querySelector(`.radio-group input[name="${name}"]:checked`);
+        if(!selected) return;
+        const groupContainer=inputs[0].closest('.form-group');
+        const headerLabel=groupContainer ? groupContainer.querySelector(':scope > label') : null;
+        const headerText=headerLabel ? headerLabel.textContent.trim() : '';
+        const optionText=selected.closest('label') ? selected.closest('label').textContent.trim() : selected.value;
+        if(headerText && optionText){ sectionItems += `<p><strong>${escapeHtml(headerText)}:</strong> ${escapeHtml(optionText)}</p>`; }
+      });
+
+      // Inputs/Textareas/Selects (not radios), include nested inside flex-row, exclude dynamic lists
+      section.querySelectorAll('input, textarea, select').forEach(ctrl=>{
+        if(ctrl.matches('input[type="radio"], input[type="checkbox"]')) return;
+        if(ctrl.closest('.radio-group')) return; // radios handled above
+        if(ctrl.closest('#equipmentList, #technologyList, #employeesList, #licensesList, #risksList')) return; // handled below
+        if(ctrl.disabled) return;
+
+        let val='';
+        if(ctrl.tagName==='SELECT'){
+          if(ctrl.multiple){
+            const texts=Array.from(ctrl.selectedOptions).map(o=>o.text.trim()).filter(Boolean);
+            if(texts.length) val=texts.join(', ');
+          } else {
+            const opt=ctrl.selectedOptions[0];
+            if(opt && opt.value) val=opt.text.trim();
+          }
+        } else {
+          val=String(ctrl.value||'').trim();
+        }
+        if(!val) return;
+
+        // Prefer explicit label[for], else nearest form-group > label
+        let labelText='';
+        if(ctrl.id){ const l=section.querySelector(`label[for="${ctrl.id}"]`); if(l) labelText=l.textContent.trim(); }
+        if(!labelText){ const fg=ctrl.closest('.form-group'); const fl = fg? fg.querySelector(':scope > label') : null; if(fl) labelText=fl.textContent.trim(); }
+        if(!labelText) return;
+        sectionItems += `<p><strong>${escapeHtml(labelText)}:</strong> ${escapeHtml(val)}</p>`;
+      });
+
+      // Dynamic lists ONLY if they exist inside this section (prevents duplication across other sections)
+      sectionItems += buildListSummary(section.querySelector('#equipmentList'), 'Required Equipment', row=>{
+        const n=row.querySelector('input[name="equipmentName[]"]').value.trim();
+        const c=row.querySelector('input[name="equipmentCost[]"]').value.trim();
+        return n ? `${n}${c?` (${c})`:''}` : '';
+      });
+      sectionItems += buildListSummary(section.querySelector('#technologyList'), 'Technologies', row=>{
+        const n=row.querySelector('input[name="technologyName[]"]').value.trim();
+        const c=row.querySelector('input[name="technologyCost[]"]').value.trim();
+        return n ? `${n}${c?` (${c})`:''}` : '';
+      });
+      sectionItems += buildListSummary(section.querySelector('#employeesList'), 'Employees', row=>{
+        const p=row.querySelector('input[name="employeePosition[]"]').value.trim();
+        const cnt=row.querySelector('input[name="employeeCount[]"]').value.trim();
+        const sal=row.querySelector('input[name="employeeSalary[]"]').value.trim();
+        if(!p) return '';
+        let extra=''; if(cnt||sal) extra=` (${cnt||''}${sal?` x ${sal}`:''})`;
+        return `${p}${extra}`;
+      });
+      sectionItems += buildListSummary(section.querySelector('#licensesList'), 'Licenses', row=>{
+        const t=row.querySelector('input[name="licenseType[]"]').value.trim();
+        const c=row.querySelector('input[name="licenseCost[]"]').value.trim();
+        return t ? `${t}${c?` (${c})`:''}` : '';
+      });
+      sectionItems += buildListSummary(section.querySelector('#risksList'), 'Main Risks', row=>{
+        const n=row.querySelector('input[name="riskName[]"]').value.trim();
+        const p=row.querySelector('input[name="riskProbability[]"]').value.trim();
+        const i=row.querySelector('input[name="riskImpact[]"]').value.trim();
+        return n ? `${n}${(p||i)?` (P:${p||''}, I:${i||''})`:''}` : '';
+      });
+
+      if(sectionItems){
+        const title = section.querySelector('h3 .section-title')?.textContent.trim() || '';
+        html += `<div class="summary-item"><h4>${escapeHtml(title)}</h4>${sectionItems}</div>`;
+      }
+    });
+
+    if(!html){
+      html = `<div class="summary-item"><p>${currentLanguage==='ar'?'لم يتم إدخال أي بيانات بعد. سيظهر الملخص هنا عند تعبئة النموذج.':'No data entered yet. Summary will appear here as you fill the form.'}</p></div>`;
+    }
+    $summary.html(html);
+  }
+
+  function buildListSummary(listElem, title, mapRow){
+    if(!listElem) return '';
+    const items = Array.from(listElem.querySelectorAll('.item-row')).map(r=>mapRow(r)).filter(Boolean);
+    if(items.length===0) return '';
+    return `<div><p><strong>${escapeHtml(title)}:</strong></p><ul>${items.map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ul></div>`;
+  }
+
+  // Titles i18n (headings only)
+  function switchTitlesToArabic(){
+    document.getElementById('pageTitle').textContent='استبانة دراسة الجدوى التفصيلية';
+    document.getElementById('summaryTitle').textContent='ملخص المشروع';
+    document.querySelectorAll('.section-title').forEach(el=>{ const ar=el.getAttribute('data-ar'); if(ar) el.textContent=' '+ar; });
+  }
+  function switchTitlesToEnglish(){
+    document.getElementById('pageTitle').textContent='Detailed Feasibility Study Questionnaire';
+    document.getElementById('summaryTitle').textContent='Project Summary';
+    document.querySelectorAll('.section-title').forEach(el=>{ const en=el.getAttribute('data-en'); if(en) el.textContent=' '+en; });
+  }
+
+  function escapeHtml(s){ return String(s).replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;' }[m])); }
+</script>
+</body>
+</html>
