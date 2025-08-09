@@ -59,23 +59,7 @@
 <div class="main-container">
   <div class="form-container">
     <h2 id="pageTitle">Detailed Feasibility Study Questionnaire</h2>
-    <p id="introParagraph" style="margin:10px 0 20px; color:#555; line-height:1.6">
-      هذا النموذج مصمم لتقديم تقييم أولي وشامل لجدوى مشروعك. يرجى ملء البيانات بدقة وبناءً على أفضل التقديرات والمعلومات المتاحة لديك حالياً. الهدف هو تحديد ما إذا كان المشروع يستحق الاستثمار فيه والمضي قدماً في دراسات تفصيلية ومتخصصة.
-    </p>
-
-    <!-- Inline translator widget -->
-    <div id="translatorWidget" style="background:#fff; border:1px solid #eee; border-radius:8px; padding:12px; margin:12px 0">
-      <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center">
-        <textarea id="translateInput" placeholder="Type text to translate..." style="flex:1; min-width:260px; height:80px"></textarea>
-        <div style="display:flex; gap:6px; align-items:center">
-          <select id="translateSource"></select>
-          <span style="opacity:.7">→</span>
-          <select id="translateTarget"></select>
-          <button type="button" id="translateBtn" class="next-button" style="float:none">Translate</button>
-        </div>
-      </div>
-      <div id="translateResult" class="result" style="margin-top:10px; background:#fafafa; border-radius:6px; min-height:44px; padding:10px">Translation will appear here...</div>
-    </div>
+    <p id="introParagraph" style="margin:10px 0 20px; color:#555; line-height:1.6">This form is designed to provide an initial and comprehensive assessment of your project's feasibility. Please fill in the data accurately based on your best estimates and the information currently available to you. The goal is to determine whether the project merits investment and moving forward to more detailed and specialized studies.</p>
 
     <form id="detailedFeasibilityForm" novalidate>
 
@@ -872,6 +856,8 @@
   let currentLanguage = 'en';
   const MAX_ITEMS = 20;
   const TRANSLATE_API = 'https://libretranslate.com';
+  let originalTextMap = new Map();
+  let currentSiteLang = 'en';
 
   $(function(){
     // Initialize select2
@@ -882,11 +868,8 @@
     
     $('#headerLanguage').on('change', function(){
       const code = $(this).val();
-      // Toggle headings between English and Arabic only
-      if(code==='ar'){ switchTitlesToArabic(); currentLanguage='ar'; }
-      else { switchTitlesToEnglish(); currentLanguage='en'; }
-      // Sync translator target language to header selection
-      $('#translateTarget').val(code);
+      translateSiteTo(code);
+      currentLanguage = (code==='ar'?'ar':'en');
       updateSummary();
     });
 
@@ -1125,50 +1108,80 @@
 
   function escapeHtml(s){ return String(s).replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;' }[m])); }
 
-  // Translator: fetch languages and translate handler
+  // Translator: fetch languages for header and site-wide DOM translation
   async function initTranslatorLanguages(){
     try{
       const res = await fetch(`${TRANSLATE_API}/languages`);
       const langs = await res.json();
-      const $src = $('#translateSource');
-      const $tgt = $('#translateTarget');
       const $hdr = $('#headerLanguage');
-      $src.empty(); $tgt.empty(); $hdr.empty();
-      langs.forEach(l=>{
-        const opt1 = new Option(l.name, l.code);
-        const opt2 = new Option(l.name, l.code);
-        const opt3 = new Option(l.name, l.code);
-        $src.append(opt1);
-        $tgt.append(opt2);
-        $hdr.append(opt3);
-      });
-      // Defaults
-      $src.val('ar');
-      $tgt.val('en');
+      $hdr.empty();
+      langs.forEach(l=>{ $hdr.append(new Option(l.name, l.code)); });
       $hdr.val('en');
+      captureOriginalTexts();
     }catch(e){ console.error('Failed to load languages', e); }
   }
 
-  async function runTranslation(){
-    const q = $('#translateInput').val().trim();
-    const source = $('#translateSource').val();
-    const target = $('#translateTarget').val();
-    if(!q){ $('#translateResult').text(currentLanguage==='ar'? '⚠ الرجاء إدخال نص للترجمة' : 'Please enter text to translate'); return; }
-    $('#translateResult').text(currentLanguage==='ar'? 'جاري الترجمة...' : 'Translating...');
+  function captureOriginalTexts(){
+    originalTextMap.clear();
+    // Capture all text nodes we intend to translate (labels, buttons, placeholders, headings, options)
+    $('[data-translate], h1, h2, h3, h4, label, button, .next-button, .section-title, #summaryTitle, #pageTitle, .summary-item p').each(function(){
+      const el=this; const key=getElementKey(el);
+      if(!originalTextMap.has(key)) originalTextMap.set(key, $(el).text().trim());
+    });
+    $('input[placeholder], textarea[placeholder], select option').each(function(){
+      const el=this; const key=getElementKey(el)+'::ph';
+      const val = el.tagName==='OPTION'? $(el).text().trim() : (el.getAttribute('placeholder')||'');
+      if(val && !originalTextMap.has(key)) originalTextMap.set(key, val);
+    });
+  }
+
+  function getElementKey(el){
+    return (el.id? `#${el.id}`: el.name? `name:${el.name}`: el.tagName+':'+Array.from($(el).parents()).map(e=>e.tagName).join('>'))+':idx'+$($(el).parent().children(el.tagName)).index(el);
+  }
+
+  async function translateSiteTo(lang){
+    if(lang==='en'){ restoreOriginalTexts(); currentSiteLang='en'; $('html').attr('lang','en').attr('dir','ltr'); return; }
+    const chunks = [];
+    const elements=[];
+    $('[data-translate], h1, h2, h3, h4, label, button, .next-button, .section-title, #summaryTitle, #pageTitle, .summary-item p').each(function(){
+      const el=this; const key=getElementKey(el); const text=originalTextMap.get(key)||$(el).text().trim();
+      if(text){ elements.push({el,key,type:'text'}); chunks.push(text); }
+    });
+    $('input[placeholder], textarea[placeholder], select option').each(function(){
+      const el=this; const key=getElementKey(el)+'::ph'; const text = el.tagName==='OPTION'? $(el).text().trim() : (el.getAttribute('placeholder')||'');
+      const original = originalTextMap.get(key)||text; if(original){ elements.push({el,key,type:'ph', isOption: el.tagName==='OPTION'}); chunks.push(original); }
+    });
+    if(chunks.length===0) return;
+
+    // Batch translate
+    const q = chunks.join('\n__SPLIT__\n');
     try{
       const res = await fetch(`${TRANSLATE_API}/translate`, {
-        method:'POST',
-        headers:{ 'Content-Type':'application/json' },
-        body: JSON.stringify({ q, source, target, format:'text' })
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ q, source:'en', target:lang, format:'text' })
       });
       const data = await res.json();
-      $('#translateResult').text(data.translatedText || (currentLanguage==='ar'?'حدث خطأ أثناء الترجمة':'An error occurred during translation'));
-    }catch(err){
-      console.error(err);
-      $('#translateResult').text(currentLanguage==='ar'?'حدث خطأ أثناء الترجمة':'An error occurred during translation');
-    }
+      const translated = (data.translatedText||'').split('\n__SPLIT__\n');
+      let i=0;
+      elements.forEach(item=>{
+        const t = translated[i++] || '';
+        if(item.type==='text'){ $(item.el).text(t); }
+        else if(item.type==='ph'){ if(item.isOption) $(item.el).text(t); else item.el.setAttribute('placeholder', t); }
+      });
+      currentSiteLang=lang;
+      $('html').attr('lang',lang).attr('dir', lang==='ar'?'rtl':'ltr');
+    }catch(err){ console.error('translateSiteTo failed', err); }
   }
-  $(document).on('click', '#translateBtn', runTranslation);
+
+  function restoreOriginalTexts(){
+    $('[data-translate], h1, h2, h3, h4, label, button, .next-button, .section-title, #summaryTitle, #pageTitle, .summary-item p').each(function(){
+      const el=this; const key=getElementKey(el); const orig=originalTextMap.get(key); if(orig!==undefined) $(el).text(orig);
+    });
+    $('input[placeholder], textarea[placeholder], select option').each(function(){
+      const el=this; const key=getElementKey(el)+'::ph'; const orig=originalTextMap.get(key);
+      if(orig!==undefined){ if(el.tagName==='OPTION') $(el).text(orig); else el.setAttribute('placeholder', orig); }
+    });
+  }
 </script>
 </body>
 </html>
