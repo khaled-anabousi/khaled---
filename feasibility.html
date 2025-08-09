@@ -52,13 +52,31 @@
 </head>
 <body>
 <header>
-  <button class="language-switcher" id="languageSwitcher">العربية</button>
+  <select class="language-switcher" id="headerLanguage"></select>
   <img src="images/LOGO PH.png" alt="Company Logo" class="logo">
 </header>
 
 <div class="main-container">
   <div class="form-container">
     <h2 id="pageTitle">Detailed Feasibility Study Questionnaire</h2>
+    <p id="introParagraph" style="margin:10px 0 20px; color:#555; line-height:1.6">
+      هذا النموذج مصمم لتقديم تقييم أولي وشامل لجدوى مشروعك. يرجى ملء البيانات بدقة وبناءً على أفضل التقديرات والمعلومات المتاحة لديك حالياً. الهدف هو تحديد ما إذا كان المشروع يستحق الاستثمار فيه والمضي قدماً في دراسات تفصيلية ومتخصصة.
+    </p>
+
+    <!-- Inline translator widget -->
+    <div id="translatorWidget" style="background:#fff; border:1px solid #eee; border-radius:8px; padding:12px; margin:12px 0">
+      <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center">
+        <textarea id="translateInput" placeholder="Type text to translate..." style="flex:1; min-width:260px; height:80px"></textarea>
+        <div style="display:flex; gap:6px; align-items:center">
+          <select id="translateSource"></select>
+          <span style="opacity:.7">→</span>
+          <select id="translateTarget"></select>
+          <button type="button" id="translateBtn" class="next-button" style="float:none">Translate</button>
+        </div>
+      </div>
+      <div id="translateResult" class="result" style="margin-top:10px; background:#fafafa; border-radius:6px; min-height:44px; padding:10px">Translation will appear here...</div>
+    </div>
+
     <form id="detailedFeasibilityForm" novalidate>
 
       <!-- Project Description -->
@@ -853,15 +871,22 @@
 <script>
   let currentLanguage = 'en';
   const MAX_ITEMS = 20;
+  const TRANSLATE_API = 'https://libretranslate.com';
 
   $(function(){
     // Initialize select2
     $('.select2').select2({ width:'100%', allowClear:true, placeholder:'' });
 
-    // Language switcher: Arabic only for TITLES
-    $('#languageSwitcher').on('click', function(){
-      if(currentLanguage==='en'){ switchTitlesToArabic(); currentLanguage='ar'; $(this).text('English'); }
-      else { switchTitlesToEnglish(); currentLanguage='en'; $(this).text('العربية'); }
+    // Populate header language selector with all languages from LibreTranslate
+    initTranslatorLanguages();
+    
+    $('#headerLanguage').on('change', function(){
+      const code = $(this).val();
+      // Toggle headings between English and Arabic only
+      if(code==='ar'){ switchTitlesToArabic(); currentLanguage='ar'; }
+      else { switchTitlesToEnglish(); currentLanguage='en'; }
+      // Sync translator target language to header selection
+      $('#translateTarget').val(code);
       updateSummary();
     });
 
@@ -1099,6 +1124,51 @@
   }
 
   function escapeHtml(s){ return String(s).replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;' }[m])); }
+
+  // Translator: fetch languages and translate handler
+  async function initTranslatorLanguages(){
+    try{
+      const res = await fetch(`${TRANSLATE_API}/languages`);
+      const langs = await res.json();
+      const $src = $('#translateSource');
+      const $tgt = $('#translateTarget');
+      const $hdr = $('#headerLanguage');
+      $src.empty(); $tgt.empty(); $hdr.empty();
+      langs.forEach(l=>{
+        const opt1 = new Option(l.name, l.code);
+        const opt2 = new Option(l.name, l.code);
+        const opt3 = new Option(l.name, l.code);
+        $src.append(opt1);
+        $tgt.append(opt2);
+        $hdr.append(opt3);
+      });
+      // Defaults
+      $src.val('ar');
+      $tgt.val('en');
+      $hdr.val('en');
+    }catch(e){ console.error('Failed to load languages', e); }
+  }
+
+  async function runTranslation(){
+    const q = $('#translateInput').val().trim();
+    const source = $('#translateSource').val();
+    const target = $('#translateTarget').val();
+    if(!q){ $('#translateResult').text(currentLanguage==='ar'? '⚠ الرجاء إدخال نص للترجمة' : 'Please enter text to translate'); return; }
+    $('#translateResult').text(currentLanguage==='ar'? 'جاري الترجمة...' : 'Translating...');
+    try{
+      const res = await fetch(`${TRANSLATE_API}/translate`, {
+        method:'POST',
+        headers:{ 'Content-Type':'application/json' },
+        body: JSON.stringify({ q, source, target, format:'text' })
+      });
+      const data = await res.json();
+      $('#translateResult').text(data.translatedText || (currentLanguage==='ar'?'حدث خطأ أثناء الترجمة':'An error occurred during translation'));
+    }catch(err){
+      console.error(err);
+      $('#translateResult').text(currentLanguage==='ar'?'حدث خطأ أثناء الترجمة':'An error occurred during translation');
+    }
+  }
+  $(document).on('click', '#translateBtn', runTranslation);
 </script>
 </body>
 </html>
